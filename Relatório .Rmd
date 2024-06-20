@@ -1,0 +1,66 @@
+---
+title: "Relatório Dados Paeb 2021"
+author: "Rafael Jordane"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+\newpage
+
+# Relatório Dados Paeb 2021
+
+**Autor:** Rafael Jordane de Souza Oliveira\
+**Data:** `r format(Sys.time(), '%d de %B de %Y')`
+
+\newpage
+
+# Sumário
+
+1.  [Introdução](#introdução)
+2.  [Objetivos](#objetivos)
+3.  [Metodologia](#metodologia)
+4.  [Resultados](#resultados)
+5.  [Discussão](#discussão)
+6.  [Conclusão](#conclusão)
+
+\newpage
+
+# Introdução {#introdução}
+
+O Sistema de Avaliação da Educação Básica (Saeb), realizado periodicamente pelo Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (Inep) desde os anos 1990, tem objetivos fundamentais no contexto da Educação Básica no Brasil:
+
+1.  Avaliar a Qualidade, Equidade e Eficiência da Educação: O Saeb visa avaliar a qualidade do ensino em seus diferentes níveis governamentais, buscando identificar possíveis disparidades e garantir a eficiência do sistema educacional.
+
+2.  Produzir Indicadores Educacionais: O sistema gera indicadores educacionais para o Brasil, suas regiões, Unidades da Federação, e, quando possível, para municípios e instituições escolares. Isso permite manter a comparabilidade dos dados ao longo do tempo, facilitando o acompanhamento das séries históricas.
+
+3.  Subsidiar Políticas Públicas Baseadas em Evidências: Os dados coletados são utilizados para elaborar, monitorar e aprimorar políticas públicas na área educacional. Essas políticas visam promover o desenvolvimento social e econômico do país.
+
+4.  Desenvolver Competência Técnica e Científica em Avaliação Educacional: O Saeb contribui para o desenvolvimento de competências técnicas e científicas na área de avaliação educacional, promovendo o intercâmbio entre instituições educacionais, de ensino e pesquisa.
+
+O Saeb avalia, de forma amostral e censitária, alunos de turmas regulares das redes públicas e privadas do país, tanto em áreas urbanas quanto rurais. São avaliados os alunos do 5º e 9º anos do ensino fundamental e das 3ª/4ª séries do ensino médio, nas modalidades tradicional e técnico integrado. A partir de 2019, foram adicionadas avaliações amostrais para o 2º ano do ensino fundamental em Língua Portuguesa e Matemática, além do 9º ano em Ciências Humanas e Ciências da Natureza.
+
+Além disso, a partir de 2021, o Saeb inclui uma avaliação amostral bianual da educação infantil. Esta avaliação visa verificar as condições de infraestrutura física, quadro de pessoal, gestão, recursos pedagógicos e acessibilidade, com base nos parâmetros nacionais de qualidade. Os dados são coletados eletronicamente através de respostas de gestores escolares e profissionais da educação infantil, responsáveis pelas atividades em creches e pré-escolas. Os resultados da Avaliação da Educação Infantil são divulgados em microdados específicos.
+
+Essas avaliações são essenciais para compreender e melhorar o sistema educacional brasileiro, proporcionando informações valiosas para a tomada de decisões e a implementação de políticas educacionais mais eficazes.
+
+# Objetivos {#objetivos}
+
+## Objetivo Geral
+
+Descreva o objetivo geral deste trabalho.
+
+# Metodologia {#metodologia}
+
+Descreva os métodos utilizados para realizar o estudo ou pesquisa.
+
+# Resultados {#resultados}
+
+Apresente os resultados obtidos de forma clara e objetiva.
+
+# Discussão {#discussão}
+
+Discuta os resultados apresentados, contextualizando com a literatura existente e interpretando as descobertas.
+
+# Conclusão {#conclusão}
+
+Resuma as principais conclusões obtidas com o estudo realizado.
