@@ -75,6 +75,82 @@ install.packages("ggplot2")
  library(ggplot2)
  library(tidyverse)
 
+ #Plotando a relação de escolas por região do Brasil
+ 
+ contagem <- TS_ESCOLA %>%
+   count(ID_REGIAO) %>%
+   mutate(Porcentagem = n / sum(n) * 100) %>%
+   arrange(desc(ID_REGIAO))  
+ 
+ contagem
+ 
+ ggplot(contagem, aes(x = "", y = Porcentagem, fill = factor(ID_REGIAO))) +
+   geom_bar(width = 1, stat = "identity") +
+   coord_polar(theta = "y") +
+   theme_void() +
+   geom_text(aes(label = paste0(round(Porcentagem, 1), "%")), position = position_stack(vjust = 0.5)) +
+   scale_fill_manual(values = c("#BFD3E6", "#FFD700", "#FFA07A", "#CFCFC4", "#90EE90")) +  # Definir cores para cada ID_AREA
+   labs(title = "Distribuição de localidade das Escolas por Região do País",
+        fill = "Regiões",
+        caption = "Baseado nos dados de TS_ESCOLA")
+ 
+ #Plotando a relação escolas e area
+ contagem <- TS_ESCOLA %>%
+   count(ID_AREA) %>%
+   mutate(Porcentagem = n / sum(n) * 100) %>%
+   arrange(desc(ID_AREA)) 
+ 
+ contagem
+ 
+ ggplot(contagem, aes(x = "", y = Porcentagem, fill = factor(ID_AREA))) +
+   geom_bar(width = 1, stat = "identity") +
+   coord_polar(theta = "y") +
+   theme_void() +
+   geom_text(aes(label = paste0(round(Porcentagem, 1), "%")), position = position_stack(vjust = 0.5)) +
+   scale_fill_manual(values = c("#e31a1c", "#ff7f00")) +  # Definir cores para cada ID_AREA
+   labs(title = "Distribuição de localidade das Escolas por área",
+        fill = "Local",
+        caption = "Baseado nos dados de TS_ESCOLA")
+ 
+ #Plotando a relação escola pública e privada
+ 
+ contagem <- TS_ESCOLA %>%
+   count(IN_PUBLICA) %>%
+   mutate(IN_PUBLICA = ifelse(IN_PUBLICA == "P?blica", "Publica", "Matemática")) %>%
+   mutate(Porcentagem = n / sum(n) * 100) %>%
+   arrange(desc(IN_PUBLICA))  # Ordenar por ID_AREA, se necessário
+ 
+ contagem
+ 
+ ggplot(contagem, aes(x = "", y = Porcentagem, fill = factor(IN_PUBLICA))) +
+   geom_bar(width = 1, stat = "identity") +
+   coord_polar(theta = "y") +
+   theme_void() +
+   geom_text(aes(label = paste0(round(Porcentagem, 1), "%")), position = position_stack(vjust = 0.5)) +
+   scale_fill_manual(values = c("#E75480", "#F4A7B9")) +  # Definir cores para cada ID_AREA
+   labs(title = "Distribuição dos tipos de Escolas",
+        fill = "Tipo",
+        caption = "Baseado nos dados de TS_ESCOLA")
+ 
+ #Plotando a relação de Localização
+ 
+ contagem <- TS_ESCOLA %>%
+   count(ID_LOCALIZACAO) %>%
+   mutate(Porcentagem = n / sum(n) * 100) %>%
+   arrange(desc(ID_LOCALIZACAO))
+ 
+ contagem
+ 
+ ggplot(contagem, aes(x = "", y = Porcentagem, fill = factor(ID_LOCALIZACAO))) +
+   geom_bar(width = 1, stat = "identity") +
+   coord_polar(theta = "y") +
+   theme_void() +
+   geom_text(aes(label = paste0(round(Porcentagem, 1), "%")), position = position_stack(vjust = 0.5)) +
+   scale_fill_manual(values = c("#1B9E77", "#A1D99B")) +  
+   labs(title = "Distribuição das Escolas Por LOcalização",
+        fill = "Localização",
+        caption = "Baseado nos dados de TS_ESCOLA")
+ 
 ##Médias Quinto ano 
  
 MEDIA_5EF <- TS_ESCOLA %>%
@@ -143,7 +219,7 @@ ggplot(MEDIA_EMI, aes(x = ID_REGIAO, y = Media, fill = Disciplina)) +
        fill = "Disciplina") +
   scale_fill_manual(values = c("#1B9E77", "#A1D99B"))
 
-##Médias Ensino Médio Integrado
+##Médias Ensino Médio 
 
 MEDIA_EM <- TS_ESCOLA %>%
   pivot_longer(cols = c(MEDIA_EM_LP, MEDIA_EM_MT),
@@ -180,5 +256,47 @@ ggplot(MEDIA_EM, aes(x = ID_REGIAO, y = Media, fill = Disciplina)) +
         x = "Ano Escolar",
         y = "Taxa de participação (%)")  # Títulos dos eixos
 
-
-                                              
+#Fazendo um boxplot do nível de Adequação da formação dos professores
+ 
+ ggplot() +
+   geom_boxplot(data = TS_ESCOLA, aes(x = "Formação docente EF Iniciais", y = PC_FORMACAO_DOCENTE_INICIAL), width = 0.5, fill = "#1f78b4", color = "black") +
+   geom_boxplot(data = TS_ESCOLA, aes(x = "Formação docente EF Finais", y = PC_FORMACAO_DOCENTE_FINAL), width = 0.5, fill = "#112446", color = "black") +
+   geom_boxplot(data = TS_ESCOLA, aes(x = "Formação docente EM", y = PC_FORMACAO_DOCENTE_MEDIO), width = 0.5, fill = "#6A0DAD", color = "black") +
+   theme_minimal() +
+   labs(title = "Boxplots Adequação da Formação dos professores",
+        subtitle = "Baseado no íncice de adequação da Forfação.",
+        x = "Anos Escolares",
+        y = "Valor indice de adequação") +
+   scale_x_discrete(labels = c("Formação docente EF Iniciais" = "Anos Iniciais do EF", "Formação docente EF Finais" = "Anos finais do EF", "Formação docente EM" = "Ensino Medio"))
+           
+ quartis <- data.frame(
+   Variavel = c("Formação docente nos anos Iniciais", "Formação docente anos finais", "Formação docentes EM"),
+   Q25 = c(quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_INICIAL, probs = 0.25, na.rm = TRUE),
+           quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_FINAL, probs = 0.25, na.rm = TRUE),
+           quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_MEDIO, probs = 0.25, na.rm = TRUE)),
+   Mediana = c(quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_INICIAL, probs = 0.5, na.rm = TRUE),
+               quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_FINAL, probs = 0.5, na.rm = TRUE),
+               quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_MEDIO, probs = 0.5, na.rm = TRUE)),
+   Q75 = c(quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_INICIAL, probs = 0.75, na.rm = TRUE),
+           quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_FINAL, probs = 0.75, na.rm = TRUE),
+           quantile(TS_ESCOLA$PC_FORMACAO_DOCENTE_MEDIO, probs = 0.75, na.rm = TRUE))
+ )
+ 
+ quartis
+ 
+ ## Nível Socioeconomico
+ 
+ conts <- TS_ESCOLA %>%
+   count(NIVEL_SOCIO_ECONOMICO) %>%
+   mutate(Porcentagem = n / sum(n) * 100) %>%
+   arrange(desc(NIVEL_SOCIO_ECONOMICO))  
+ 
+ ggplot(conts, aes(x = "", y = Porcentagem, fill = factor(NIVEL_SOCIO_ECONOMICO))) +
+   geom_bar(width = 1, stat = "identity") +
+   coord_polar(theta = "y") +
+   theme_void() +
+   geom_text(aes(label = paste0(round(Porcentagem, 1), "%")), position = position_stack(vjust = 0.5)) +
+   scale_fill_manual(values = c("#BFD3E6", "#FFD700", "#FFA07A", "#CFCFC4", "#90EE90", "#E75480", "#F4A7B9", "#A1D99B")) +
+   labs(title = "Distribuição de Localidade das Escolas por Região do País",
+        fill = "Regiões",
+        caption = "Baseado nos dados de TS_ESCOLA")
